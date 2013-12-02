@@ -6,27 +6,34 @@ import java.util.List;
 public class ShoppingCart {
     private int amount = 0;
 
-    private final int CAPACITY = 10;
-    private Product[] productsArray = new Product[CAPACITY];
+
+    private List<Product> products = new ArrayList<Product>();
 
     public int getAmount() {
         return amount;
     }
 
-    public void addProduct(Product product) throws Exception {
-        if (amount < CAPACITY) {
-            productsArray[amount++] = product;
-        } else {
-            throw new Exception("overflow!");
-        }
+    public void addProduct(Product product) {
+        products.add(product);
     }
 
-    public Product queryProductByName(String name) {
-        for (int i = 0; i < productsArray.length; i++) {
-            if (productsArray[i].getName().equals(name)) {
-                return productsArray[i];
+    public Product queryByName(String name) {
+        for (int i = 0; i < products.size(); i++)
+            if (products.get(i).getName().equals(name)) {
+                return products.get(i);
             }
-        }
         return null;
     }
+
+    public Product remove(String name) {
+        Product product = null;
+        for (int i = 0; i < products.size(); i++)
+            if (products.get(i).getName().equals(name)) {
+                product =  products.get(i);
+                products.remove(product);
+            }
+        return product;
+    }
+
+
 }
