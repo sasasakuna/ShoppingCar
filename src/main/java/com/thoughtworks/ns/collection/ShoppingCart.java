@@ -50,19 +50,26 @@ public class ShoppingCart {
         } else {
             return null;
         }
+
     }
 
     public int getPrice()
     {
-        int totalPrice = 0;
-        Iterable<Integer> price = Iterables.transform(products.values(), new Function<Product, Integer>() {
+//        int totalPrice = 0;
+//        Iterable<Integer> price = Iterables.transform(products.values(), new Function<Product, Integer>() {
+//            @Override
+//            public Integer apply(Product input) {
+//                return input.getPrice();
+//            }
+//        });
+//        for(int i : price)
+//             totalPrice+=i;
+//        return totalPrice;
+        return  Reduce.reduce(products.values(), new Func<Product, Integer>() {
             @Override
-            public Integer apply(Product input) {
-                return input.getPrice();
+            public Integer apply(Product currentElement, Integer origin) {
+                return  currentElement.getPrice() + origin;
             }
-        });
-        for(int i : price)
-             totalPrice+=i;
-        return totalPrice;
+        }, 0);
     }
 }
