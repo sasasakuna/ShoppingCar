@@ -4,20 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
-    private int amount = 0;
 
     private final int CAPACITY = 10;
-    private Product[] productsArray = new Product[CAPACITY];
+    private int amount;
+    private Product[] productsArray;
+
+
+    public ShoppingCart() {
+        this.amount = 0;
+        this.productsArray = new Product[CAPACITY];
+    }
+
+    public ShoppingCart(int amount, Product[] productsArray) {
+        this.amount = amount;
+        this.productsArray = productsArray;
+    }
+
 
     public int getAmount() {
         return amount;
     }
 
-    public void addProduct(Product product) throws Exception {
+    public void addProduct(Product product) throws MyShoppingCartOverFlowException {
         if (amount < CAPACITY) {
             productsArray[amount++] = product;
         } else {
-            throw new Exception("overflow!");
+            throw new MyShoppingCartOverFlowException("OVERFLOW!");
         }
     }
 

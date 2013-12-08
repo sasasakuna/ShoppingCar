@@ -10,7 +10,6 @@ import static org.junit.Assert.fail;
 public class ShoppingCartTest {
 
     private ShoppingCart shoppingCart;
-    Product product;
 
     @Before
     public void setUp() {
@@ -19,32 +18,27 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void should_get_product_amount() throws Exception {
+    public void should_get_product_amount(){
         assertThat(shoppingCart.getAmount(), is(0));
     }
 
     @Test
-    public void should_add_product() throws Exception {
+    public void should_add_products() throws MyShoppingCartOverFlowException {
         for (int i = 0; i < 10; i++)
-            shoppingCart.addProduct(product);
+            shoppingCart.addProduct(new Product("food"+i));
         assertThat(shoppingCart.getAmount(), is(10));
     }
 
-    @Test
-    public void should_add_product_throwsException_test() throws Exception {
-        try {
-            for (int i = 0; i < 11; i++)
-                shoppingCart.addProduct(product);
-            fail("Expected an overflow Exception to be thrown");
-        } catch (Exception e) {
-            assertThat(e.getMessage(), is("overflow!"));
-        }
+    @Test (expected = MyShoppingCartOverFlowException.class)
+    public void should_add_product_throwsException() throws MyShoppingCartOverFlowException{
+        for (int i = 0; i < 11; i++)
+            shoppingCart.addProduct(new Product("food"+i));
+        fail("Expected an overflow Exception to be thrown");
     }
 
     @Test
-    public void should_queryProductByName_Test() throws Exception {
-        product = new Product("food");
-        shoppingCart.addProduct(product);
-        assertThat(shoppingCart.queryProductByName("food"), is(product));
+    public void should_queryProductByName_Test() throws MyShoppingCartOverFlowException {
+        shoppingCart.addProduct(new Product("book"));
+        assertThat(shoppingCart.queryProductByName("book"), is(new Product("book")));
     }
 }
