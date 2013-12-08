@@ -30,21 +30,28 @@ public class ShoppingCartTest {
     @Test
     public void should_add_products() {
         for (int i = 0; i < 10; i++)
-            shoppingCart.addProduct("Food", new Product("Rice"));
+            shoppingCart.addProduct("Food", new Product("Rice", 1));
         assertThat(shoppingCart.getAmount(), is(10));
     }
 
     @Test
     public void should_query_products_amount() {
         for (int i = 0; i < 10; i++)
-            shoppingCart.addProduct("Book", new Product("Harry Potter"));
+            shoppingCart.addProduct("Book", new Product("Harry Potter", 2));
         assertThat(shoppingCart.queryAmount("Harry Potter"), is(10));
     }
 
     @Test
     public void should_remove_products() {
         for (int i = 0; i < 10; i++)
-            shoppingCart.addProduct("Book", new Product("Harry Potter"));
+            shoppingCart.addProduct("Book", new Product("Harry Potter", 2));
         assertThat(shoppingCart.remove("Harry Potter").size(), is(10));
+    }
+
+    @Test
+    public void should_get_price() {
+        for (int i = 0; i < 10; i++)
+            shoppingCart.addProduct("Book", new Product("Harry Potter", 2));
+        assertThat(shoppingCart.getPrice(), is(20));
     }
 }

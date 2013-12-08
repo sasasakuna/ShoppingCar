@@ -1,5 +1,6 @@
 package com.thoughtworks.ns.collection;
 
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.*;
@@ -32,7 +33,7 @@ public class ShoppingCart {
         return Multimaps.filterValues(products, new Predicate<Product>() {
             @Override
             public boolean apply(Product input) {
-                return input.name.equals(name);
+                return input.getName().equals(name);
             }
         });
     }
@@ -51,4 +52,17 @@ public class ShoppingCart {
         }
     }
 
+    public int getPrice()
+    {
+        int totalPrice = 0;
+        Iterable<Integer> price = Iterables.transform(products.values(), new Function<Product, Integer>() {
+            @Override
+            public Integer apply(Product input) {
+                return input.getPrice();
+            }
+        });
+        for(int i : price)
+             totalPrice+=i;
+        return totalPrice;
+    }
 }
