@@ -1,7 +1,12 @@
 package com.thoughtworks.ns.collection;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -18,27 +23,28 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void should_get_product_amount(){
+    public void should_get_product_amount() {
         assertThat(shoppingCart.getAmount(), is(0));
     }
 
     @Test
-    public void should_add_products() throws MyShoppingCartOverFlowException {
+    public void should_add_products() {
         for (int i = 0; i < 10; i++)
-            shoppingCart.addProduct(new Product("food"+i));
+            shoppingCart.addProduct("Food", new Product("Rice"));
         assertThat(shoppingCart.getAmount(), is(10));
     }
 
-    @Test (expected = MyShoppingCartOverFlowException.class)
-    public void should_add_product_throwsException() throws MyShoppingCartOverFlowException{
-        for (int i = 0; i < 11; i++)
-            shoppingCart.addProduct(new Product("food"+i));
-        fail("Expected an overflow Exception to be thrown");
+    @Test
+    public void should_query_products_amount() {
+        for (int i = 0; i < 10; i++)
+            shoppingCart.addProduct("Book", new Product("Harry Potter"));
+        assertThat(shoppingCart.queryAmount("Harry Potter"), is(10));
     }
 
     @Test
-    public void should_queryProductByName_Test() throws MyShoppingCartOverFlowException {
-        shoppingCart.addProduct(new Product("book"));
-        assertThat(shoppingCart.queryProductByName("book"), is(new Product("book")));
+    public void should_remove_products() {
+        for (int i = 0; i < 10; i++)
+            shoppingCart.addProduct("Book", new Product("Harry Potter"));
+        assertThat(shoppingCart.remove("Harry Potter").size(), is(10));
     }
 }

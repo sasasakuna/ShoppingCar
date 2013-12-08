@@ -1,44 +1,54 @@
 package com.thoughtworks.ns.collection;
 
+import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.*;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ShoppingCart {
 
-    private final int CAPACITY = 10;
-    private int amount;
-    private Product[] productsArray;
-
+    private Multimap<String, Product> products;
 
     public ShoppingCart() {
-        this.amount = 0;
-        this.productsArray = new Product[CAPACITY];
+        this.products = ArrayListMultimap.create();
     }
 
-    public ShoppingCart(int amount, Product[] productsArray) {
-        this.amount = amount;
-        this.productsArray = productsArray;
+    public ShoppingCart(Multimap products) {
+        this.products = products;
     }
-
 
     public int getAmount() {
-        return amount;
+        return products.size();
     }
 
-    public void addProduct(Product product) throws MyShoppingCartOverFlowException {
-        if (amount < CAPACITY) {
-            productsArray[amount++] = product;
-        } else {
-            throw new MyShoppingCartOverFlowException("OVERFLOW!");
-        }
+    public void addProduct(String kind, Product product) {
+        products.put(kind, product);
     }
 
-    public Product queryProductByName(String name) {
-        for (int i = 0; i < productsArray.length; i++) {
-            if (productsArray[i].getName().equals(name)) {
-                return productsArray[i];
+    public Multimap<String, Product> query(final String name) {
+        return Multimaps.filterValues(products, new Predicate<Product>() {
+            @Override
+            public boolean apply(Product input) {
+                return input.name.equals(name);
             }
-        }
-        return null;
+        });
     }
+
+    public int queryAmount(final String name) {
+        return query(name).size();
+    }
+
+    public Multimap<String, Product> remove(String name) {
+        Multimap<String, Product> retVal = query(name);
+        if (retVal.size() > 0) {
+            products.removeAll(retVal);
+            return retVal;
+        } else {
+            return null;
+        }
+    }
+
 }
