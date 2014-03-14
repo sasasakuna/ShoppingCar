@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+ 
+    <module name="Checker">
+    <module name="TreeWalker">
+        <!-- Naming Convention -->
+        <module name="ConstantName"/>
+        <module name="LocalFinalVariableName"/>
+        <module name="LocalVariableName"/>
+
+        <module name="MemberName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+            <property name="tokens" value="METHOD_DEF"/>
+        </module>
+
+        <module name="ParameterName"/>
+        <module name="TypeName"/>
+
+        <!-- Import Statement -->
+        <module name="UnusedImports"/>
+
+        <!-- Size -->
+        <module name="LineLength">
+            <property name="max" value="120"/>
+        </module>
+
+        <module name="MethodLength">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="max" value="30"/>
+            <property name="countEmpty" value="false"/>
+        </module>
+
+        <module name="ParameterNumber">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="max" value="7"/>
+        </module>
+
+        <!-- Whitespaces -->
+        <module name="GenericWhitespace"/>
+
+        <!-- Modifier -->
+        <module name="ModifierOrder"/>
+        <module name="RedundantModifier"/>
+
+        <!-- Check for blocks -->
+        <module name="LeftCurly">
+            <property name="option" value="eol"/>
+        </module>
+
+        <module name="RightCurly">
+            <property name="option" value="same"/>
+        </module>
+
+        <module name="NeedBraces" />
+        <module name="AvoidNestedBlocks"/>
+
+        <!-- Coding Style -->
+        <module name="CovariantEquals"/>
+        <module name="EmptyStatement"/>
+        <module name="EqualsHashCode"/>
+        <module name="MagicNumber">
+            <property name="ignoreAnnotation" value="true"/>
+        </module>
+        <module name="MissingSwitchDefault"/>
+        <module name="ModifiedControlVariable"/>
+
+        <module name="RedundantThrows">
+            <property name="allowSubclasses" value="true"/>
+        </module>
+
+        <module name="SimplifyBooleanExpression"/>
+        <module name="SimplifyBooleanReturn"/>
+
+        <module name="DeclarationOrder"/>
+        <module name="OneStatementPerLine"/>
+    </module>
+</module>
